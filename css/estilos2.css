@@ -1,0 +1,427 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
+@font-face {
+  font-family: "GothamBook";
+  src: url("../Fonts/GothamBook.ttf");
+}
+
+@font-face {
+  font-family: "GothamBold";
+  src: url("../Fonts/GothamBold.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+li, p, label, a {
+  /*font-family: 'GothamBook';*/
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+}
+
+.subtitulo {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 1em;
+  color: #213D73;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+}
+
+.subtituloWhite {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 1em;
+  color: #FFFFFF;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+}
+
+.title {
+  /*font-family: 'GothamBold';*/
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #213D73;
+  padding-top: 20px;
+  margin-bottom: 5px;
+}
+
+.titleWhite {
+  /*font-family: 'GothamBold';*/
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #FFFFFF;
+  padding-top: 20px;
+  margin-bottom: 5px;
+}
+
+.title2 {
+  /*font-family: 'GothamBold';*/
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fcfcfc;
+  padding: 10px;
+}
+
+.title2White {
+  /*font-family: 'GothamBold';*/
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  padding: 10px;
+}
+
+#header {
+  background-color: #a7a6a6;
+  border-bottom: 1px solid #213D73;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+#header .header__logo {
+  width: 30%;
+}
+
+#header .header__logo img {
+  max-width: 50%;
+  height: auto;
+}
+
+@media all and (min-width: 768px) {
+  #header .header__logo {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 30%;
+  }
+  #header .header__logo .imagenlogo {
+    content: url("../Media/Logo2.png");
+  }
+  #header .header__logo img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+#header #header__call-action {
+  border: 2px solid #213D73;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  background-color: #213D73;
+}
+
+#header #header__call-action:hover {
+  background-color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+}
+
+#header #header__call-action a:hover {
+  color: black;
+  background-color: white;
+}
+
+#header .header__menu {
+  list-style-type: none;
+  padding: 0 10px;
+}
+
+#header .header__menu a {
+  color: #FFFFFF;
+  text-decoration: none;
+  text-transform: upper;
+}
+
+#header .header__menu a:hover {
+  color: black;
+  background-color: white;
+}
+
+.banner .banner__carousel-item {
+  height: 50vh;
+  min-height: 300px;
+}
+
+.banner .banner__carousel-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 300px;
+}
+
+@media all and (min-width: 768px) {
+  .banner .banner__carousel-item .imagebanner1 {
+    content: url("../Media/mercado-forex-divisas.png");
+  }
+  .banner .banner__carousel-item .imagebanner2 {
+    content: url("../Media/cryptobackground.jpg");
+  }
+  .banner .banner__carousel-item .imagebanner3 {
+    content: url("../Media/stockbackground.jpg");
+  }
+  .banner .banner__carousel-item .imagebanner4 {
+    content: url("../Media/stockbackground2.jpg");
+  }
+  .banner .banner__carousel-item img {
+    width: 100%;
+  }
+}
+
+#value {
+  padding: 8px;
+}
+
+#value .value__grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: (2fr)[1];
+      grid-template-rows: repeat(1, 2fr);
+  justify-items: center;
+}
+
+@media all and (min-width: 768px) {
+  #value .value__grid {
+    -ms-grid-columns: 1fr 2fr;
+        grid-template-columns: 1fr 2fr;
+    -ms-grid-rows: (1fr)[1];
+        grid-template-rows: repeat(1, 1fr);
+  }
+}
+
+#value .value__grid img {
+  height: 20vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#value .value__grid img:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+#value .value__grid ul.value__list-feature {
+  list-style-position: inside;
+  font-size: 1.2rem;
+  margin-bottom: 2em;
+  list-style: none;
+  padding: 0;
+}
+
+#value .value__grid ul.value__list-feature li {
+  margin: 5px;
+  padding-left: 2em;
+}
+
+#value .value__grid ul.value__list-feature li:before {
+  content: "\f201";
+  /* FontAwesome Unicode */
+  font-family: FontAwesome;
+  color: #213D73;
+  display: inline-block;
+  margin-left: -2em;
+  /* same as padding-left set on li */
+  width: 2em;
+  /* same as padding-left set on li */
+}
+
+#performance {
+  padding: 8px;
+  background: #020024;
+  background: radial-gradient(circle, #020024 0%, rgba(33, 64, 115, 0.922006) 100%, white 100%);
+}
+
+#performance #performance__iframe {
+  display: inline-block;
+  margin-bottom: 15px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: center;
+}
+
+#performance #performance__info {
+  display: inline-block;
+  margin-bottom: 15px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: center;
+}
+
+#performance #performance__info #performance__table {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+#performance #performance__info #performance__table thead {
+  /*font-family: 'GothamBold';*/
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #949eaf;
+  text-align: center;
+}
+
+#performance #performance__info #performance__table tbody {
+  /*font-family: 'GothamBook';*/
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+#performance #performance__info #performance__table #tr, #performance #performance__info #performance__table td {
+  width: 150px;
+  text-align: center;
+  border: 1px;
+  padding: 5px;
+}
+
+#how {
+  padding: 8px;
+}
+
+#how .how__flex-features {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+#how .how__flex-features .how__features-items {
+  display: inline-block;
+  margin: 15px;
+}
+
+#how .how__flex-features .how__features-items img {
+  height: 20vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#how .how__flex-features .how__features-items img:hover {
+  -webkit-transform: skewY(2deg);
+          transform: skewY(2deg);
+}
+
+#community {
+  padding: 8px;
+  background: #020024;
+  background: radial-gradient(circle, #020024 0%, rgba(33, 64, 115, 0.922006) 100%, white 100%);
+}
+
+#community .community__text {
+  padding: 20px;
+}
+
+#community .community__text p {
+  margin: 10px;
+  color: #FFFFFF;
+}
+
+#community .community__text a {
+  color: #FFFFFF;
+}
+
+#contacto {
+  margin: 20px;
+}
+
+#contacto #contacto__form {
+  margin: 20px;
+}
+
+#contacto #contacto__form input:focus {
+  font-size: 24px;
+  -webkit-box-shadow: 0 0 10px #000000;
+          box-shadow: 0 0 10px #000000;
+  outline: none !important;
+  border: 1px solid #213D73;
+}
+
+#contacto #contacto__form input:hover, #contacto #contacto__form textarea:hover {
+  border: 1px solid #213D73;
+}
+
+#contacto #contacto__form label, #contacto #contacto__form input {
+  margin: 5px;
+}
+
+#footer {
+  background-color: #000000;
+  padding: 20px;
+}
+
+#footer .footer__flex-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#footer .footer__flex-block p, #footer .footer__flex-block a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#footer .footer__flex-block #footer__follow-us, #footer .footer__flex-block #footer__menu, #footer .footer__flex-block #footer__newsletter {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: inline-block;
+  margin: 10px;
+}
+
+.siteCenter {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.stickyIcon {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+/*# sourceMappingURL=estilos2.css.map */

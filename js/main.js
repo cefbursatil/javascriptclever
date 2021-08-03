@@ -51,13 +51,13 @@ let cantMoneda1=0;
 let multMoneda2=0;
 let cantMoneda2=0;
 let outputText=""
-// Pido el país y la hora actual
+// Pido las monedas y su correspondiente cantidad
 moneda1=prompt("¿que moneda quieres convertir? (ej: USD)");
 moneda1=moneda1.toLowerCase();
 cantMoneda1=parseFloat(prompt("¿Que cantidad quieres convertir? \n (ej: 10000)"));
 moneda2=prompt("¿a cual moneda quieres convertir convertir? (ej: AUD)");
 moneda2=moneda2.toLowerCase();
-// calculo la hora en japon
+// calculo la cantidad de la segunda moneda
 cantMoneda2=conversor(moneda1,cantMoneda1,moneda2);
 // texto de salida
 outputText=output(moneda1,cantMoneda1,moneda2,cantMoneda2);

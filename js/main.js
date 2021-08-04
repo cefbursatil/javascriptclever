@@ -9,7 +9,7 @@ Es una página relacionada con el trading, así que inicialmente se piensa imple
 
 //FUNCIONES
 function conversor(moneda1,cantMoneda1,moneda2){
-    //recibe la hora actual (solo hora) y el país de esa hora entre argentina y colombia y devuelve la hora de japon para ver las olimpidas
+    //Funcion que realiza la conversión de monedas
     let multMoneda2=0;
     if(moneda1=="usd"){
         if(moneda2=="usd"){

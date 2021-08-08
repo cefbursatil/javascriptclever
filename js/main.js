@@ -8,59 +8,74 @@ Es una página relacionada con el trading, así que inicialmente se piensa imple
 //conversor version pre alpha
 
 //FUNCIONES
-function conversor(moneda1,cantMoneda1,moneda2){
-    //Funcion que realiza la conversión de monedas
-    let multMoneda2=0;
-    if(moneda1=="usd"){
-        if(moneda2=="usd"){
-            multMoneda2=1;
+class conversor{
+    constructor(pMoneda1,pMoneda2){
+        this.Moneda1=pMoneda1;
+        this.Moneda2=pMoneda2;
+    }
+    convert(){
+        //Metodo que realiza la conversión de monedas
+        let multMoneda2=0;
+        if(this.Moneda1.NombreMoneda=="usd"){
+            if(this.Moneda2.NombreMoneda=="usd"){
+                multMoneda2=1;
+            }
+            else if(this.Moneda2.NombreMoneda=="aud"){
+                multMoneda2=0.9;
+            }
+            else{
+                multMoneda2=1;
+            }
         }
-        else if(moneda2=="aud"){
-            multMoneda2=0.9;
+        else if(this.Moneda1.NombreMoneda=="aud"){
+            if(this.Moneda2.NombreMoneda=="aud"){
+                multMoneda2=1;
+            }
+            else if(this.Moneda2.NombreMoneda=="usd"){
+                multMoneda2=1.1;
+            }
+            else{
+                multMoneda2=1;
+            }
         }
         else{
             multMoneda2=1;
         }
+        this.Moneda2.CantidadMoneda=multMoneda2*this.Moneda1.CantidadMoneda;
     }
-    else if(moneda1=="aud"){
-        if(moneda2=="aud"){
-            multMoneda2=1;
-        }
-        else if(moneda2=="usd"){
-            multMoneda2=1.1;
-        }
-        else{
-            multMoneda2=1;
-        }
+    output(){
+        this.convert();
+        return(this.Moneda1.CantidadMoneda+this.Moneda1.NombreMoneda+" equivalen a "+this.Moneda2.CantidadMoneda+this.Moneda2.NombreMoneda);
     }
-    else{
-        multMoneda2=1;
+
+}
+class moneda{
+    constructor(pNombreMoneda,pCantidadMoneda){
+        this.NombreMoneda=pNombreMoneda.toLowerCase();
+        this.CantidadMoneda=pCantidadMoneda;
     }
-    return(multMoneda2*cantMoneda1);
 }
 
-function output(moneda1,cantMoneda1,moneda2,cantMoneda2){
-        return(cantMoneda1+moneda1+" equivalen a "+cantMoneda2+moneda2);
-}
 
 
 // Inicializo las variables
 let moneda1="";
 let moneda2="";
 let cantMoneda1=0;
-let multMoneda2=0;
-let cantMoneda2=0;
 let outputText=""
 // Pido las monedas y su correspondiente cantidad
+
 moneda1=prompt("¿que moneda quieres convertir? (ej: USD)");
-moneda1=moneda1.toLowerCase();
 cantMoneda1=parseFloat(prompt("¿Que cantidad quieres convertir? \n (ej: 10000)"));
 moneda2=prompt("¿a cual moneda quieres convertir convertir? (ej: AUD)");
-moneda2=moneda2.toLowerCase();
+//Creo los objetos
+mon1 = new moneda(moneda1,cantMoneda1);
+mon2 = new moneda(moneda2,0);
+
+let conv = new conversor(mon1,mon2);
 // calculo la cantidad de la segunda moneda
-cantMoneda2=conversor(moneda1,cantMoneda1,moneda2);
 // texto de salida
-outputText=output(moneda1,cantMoneda1,moneda2,cantMoneda2);
+outputText=conv.output();
 // alerta al usuario
 alert(outputText);
 

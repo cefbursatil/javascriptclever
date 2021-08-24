@@ -18,7 +18,7 @@ class conversor{
     convert(){
         //Metodo que realiza la conversión de monedas
         let multMoneda2=0;
-        console.log(this.Moneda1.NombreMoneda+" "+ValorDolares[this.Moneda1.NombreMoneda]+" "+ValorDolares[this.Moneda2.NombreMoneda]);
+        //console.log(this.Moneda1.NombreMoneda+" "+ValorDolares[this.Moneda1.NombreMoneda]+" "+ValorDolares[this.Moneda2.NombreMoneda]);
         if(ValorDolares[this.Moneda1.NombreMoneda] === undefined || ValorDolares[this.Moneda2.NombreMoneda] === undefined){
             console.log("undefined");
             multMoneda2=1;
@@ -46,16 +46,18 @@ class moneda{
     }
 }
 let dolaresArray=[];
+let convArray=[];
+if(localStorage.getItem('Conversiones')!== null){
+    convArray=JSON.parse(localStorage.getItem('Conversiones'));
+}
 if(localStorage.getItem('Dolares')!== null){
-    dolaresArray=localStorage.getItem('Dolares');
+    dolaresArray=JSON.parse(localStorage.getItem('Dolares'));
 }
 function CalcConversion(){
     let moneda1="usd";
     let moneda2="usd";
     let cantMoneda1=0;
     let outputText="";
-    let convArray=[];
-
     moneda1=document.getElementById("curr1").value;
     cantMoneda1=document.getElementById("cantidad").value;
     moneda2=document.getElementById("curr2").value;
@@ -64,6 +66,7 @@ function CalcConversion(){
     mon2 = new moneda(moneda2,0);
 
     let conv = new conversor(mon1,mon2);
+
     //guardo conversor en array para analizar estadisticas
     convArray.push(conv);
 
@@ -71,18 +74,39 @@ function CalcConversion(){
     // texto de salida y cantDolares
     outputText=conv.output();
     const resultOutput = document.getElementById("result");
-    resultOutput.innerText=conv.Moneda2.CantidadMoneda;
+    resultOutput.value=conv.Moneda2.CantidadMoneda;
     dolaresArray.push(convArray[convArray.length-1].cantDolares);
-    localStorage.SetItem('Dolares',dolaresArray);
+    localStorage.setItem('Dolares',JSON.stringify(dolaresArray));
+    localStorage.setItem('Conversiones',JSON.stringify(convArray));
+}
+
+function showLastConversions(){
+    var f=0;
+    divShowLasts.innerHTML=" ";
+    divShowLasts.innerHTML+=`<br><h3> Last Conversions </h3><br>`;
+    for(let i=0; i<convArray.length && f<5;i++){
+
+        divShowLasts.innerHTML+=`<p> ${convArray[i].Moneda1.CantidadMoneda}
+        ${convArray[i].Moneda1.NombreMoneda} <strong>=</strong> 
+        ${convArray[i].Moneda2.CantidadMoneda}${convArray[i].Moneda1.NombreMoneda}
+        </p><hr>`;
+        f++;     
+
+    }
 }
 
 
 // Inicializo las variables
 let moneda1prub=document.getElementById("curr1").value;
 let mayorDolares=0;
-// Pido las monedas y su correspondiente cantidad
-const convertidor=document.getElementById("convert");
+
+var divShowLasts=document.getElementById("LastConversions");
+var convertidor=document.getElementById("convert");
 convertidor.addEventListener('click',CalcConversion);
+var convertidor=document.getElementById("convert");
+var showlasts=document.getElementById("ShowAll");
+showlasts.addEventListener('click',showLastConversions);
+
 //ordenamos array para capturar el mayor de las conversiones y ofrecemos alerta final
 mayorDolares=dolaresArray.sort(function(a, b){return b-a})[0];
 //alert("Realizaste "+convArray.length+ " conversiones de moneda \n y la mayor cantidad de dolares en una conversion fue "+mayorDolares);

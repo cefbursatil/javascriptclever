@@ -74,10 +74,20 @@ function CalcConversion(){
     // texto de salida y cantDolares
     outputText=conv.output();
     const resultOutput = document.getElementById("result");
-    resultOutput.value=Math.round(conv.Moneda2.CantidadMoneda*1000)/1000;
+    resultOutput.innerHTML=(Math.round(conv.Moneda2.CantidadMoneda*1000)/1000)+" "+moneda2;
     dolaresArray.push(convArray[convArray.length-1].cantDolares);
     localStorage.setItem('Dolares',JSON.stringify(dolaresArray));
     localStorage.setItem('Conversiones',JSON.stringify(convArray));
+    $('#result').animate({height :'50px',
+                          margin:"2em",
+                          "font-size":"50px"},"slow")
+                .fadeIn(2000)
+                .css({"color":"blue"})
+                .delay(4000)
+                .animate({height :'20px',
+                          margin:"1.5em",
+                          "font-size":"25px"},"slow")
+                .fadeOut(5000);    
 }
 
 function showLastConversions(){
@@ -94,6 +104,19 @@ function showLastConversions(){
         );
         f++;     
     }
+    $('#LastConversions').toggle("fast");
+    if($('#ShowAll').val()=="Show All"){
+        $('#ShowAll').val("Hide All");
+    }
+    else{
+        $('#ShowAll').val("Show All");
+    }
+    $('html, body').animate({
+        scrollTop: $("#LastConversions").offset().top  
+    }, 500);
+
+
+
 }
 
 

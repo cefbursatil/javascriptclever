@@ -74,7 +74,7 @@ function CalcConversion(){
     // texto de salida y cantDolares
     outputText=conv.output();
     const resultOutput = document.getElementById("result");
-    resultOutput.value=conv.Moneda2.CantidadMoneda;
+    resultOutput.value=Math.round(conv.Moneda2.CantidadMoneda*1000)/1000;
     dolaresArray.push(convArray[convArray.length-1].cantDolares);
     localStorage.setItem('Dolares',JSON.stringify(dolaresArray));
     localStorage.setItem('Conversiones',JSON.stringify(convArray));
@@ -82,31 +82,28 @@ function CalcConversion(){
 
 function showLastConversions(){
     var f=0;
+    var divShowLasts=document.getElementById("LastConversions");
     divShowLasts.innerHTML=" ";
-    divShowLasts.innerHTML+=`<br><h3> Last Conversions </h3><br>`;
-    for(let i=0; i<convArray.length && f<5;i++){
-
-        divShowLasts.innerHTML+=`<p> ${convArray[i].Moneda1.CantidadMoneda}
-        ${convArray[i].Moneda1.NombreMoneda} <strong>=</strong> 
-        ${convArray[i].Moneda2.CantidadMoneda}${convArray[i].Moneda1.NombreMoneda}
-        </p><hr>`;
+    $('#LastConversions').append(`<br><h3> Last 5 Conversions </h3><br></br>`);
+    for(let i=convArray.length-1;i>=0  && f<5;i--){
+        $('#LastConversions').append(`
+        <p> ${(Math.round(convArray[i].Moneda1.CantidadMoneda*1000)/1000)}
+         ${convArray[i].Moneda1.NombreMoneda} <strong>=</strong> 
+        ${(Math.round(convArray[i].Moneda2.CantidadMoneda*1000)/1000)} ${convArray[i].Moneda1.NombreMoneda}
+        </p><hr>`
+        );
         f++;     
-
     }
 }
 
 
-// Inicializo las variables
-let moneda1prub=document.getElementById("curr1").value;
-let mayorDolares=0;
+// Comienzo a realizar las operaciones de las variables una vez este cargado el DOM
+$(document).ready(function(){
 
-var divShowLasts=document.getElementById("LastConversions");
-var convertidor=document.getElementById("convert");
-convertidor.addEventListener('click',CalcConversion);
-var convertidor=document.getElementById("convert");
-var showlasts=document.getElementById("ShowAll");
-showlasts.addEventListener('click',showLastConversions);
+    $('#convert').on('click',CalcConversion);
+    $('#ShowAll').on('click',showLastConversions);
+    //ordenamos array para capturar el mayor de las conversiones y ofrecemos alerta final
+    let mayorDolares=dolaresArray.sort(function(a, b){return b-a})[0];
+}) ;   
 
-//ordenamos array para capturar el mayor de las conversiones y ofrecemos alerta final
-mayorDolares=dolaresArray.sort(function(a, b){return b-a})[0];
 //alert("Realizaste "+convArray.length+ " conversiones de moneda \n y la mayor cantidad de dolares en una conversion fue "+mayorDolares);

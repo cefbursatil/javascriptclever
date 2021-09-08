@@ -9,7 +9,8 @@ Es una página relacionada con el trading, así que inicialmente se piensa imple
 
 //Objetos con metodos dentro
 
-var ValorDolares ={"usd":1,"aud":0.74,"gbp":1.39,"jpy":0.0091,"cop":0.00025,"ars":0.010}
+//var ValorDolares ={"usd":1,"aud":0.74,"gbp":1.39,"jpy":0.0091,"cop":0.00025,"ars":0.010}
+var ValorDolares={};
 class conversor{
     constructor(pMoneda1,pMoneda2){
         this.Moneda1=pMoneda1;
@@ -18,7 +19,23 @@ class conversor{
     convert(){
         //Metodo que realiza la conversión de monedas
         let multMoneda2=0;
-        //console.log(this.Moneda1.NombreMoneda+" "+ValorDolares[this.Moneda1.NombreMoneda]+" "+ValorDolares[this.Moneda2.NombreMoneda]);
+        
+        // API
+        const APIURL = 'http://api.exchangeratesapi.io/v1/latest' ; 
+        //Declaramos la información a enviar
+        const infoPost =  {access_key: 'c0e73835a8c74e4e8a2ff702754ea125', base: 'EUR'};
+
+        $.ajax({
+            method: "get",
+            url: APIURL,
+            data: infoPost,
+            dataType:"json",
+            success: function(respuesta){
+                ValorDolares=respuesta.rates;
+                console.log(ValorDolares);
+                
+            }
+        })
         if(ValorDolares[this.Moneda1.NombreMoneda] === undefined || ValorDolares[this.Moneda2.NombreMoneda] === undefined){
             console.log("undefined");
             multMoneda2=1;
@@ -29,7 +46,7 @@ class conversor{
             this.cantDolares=ValorDolares[this.Moneda1.NombreMoneda]*this.Moneda1.CantidadMoneda;
         }
         
-        this.Moneda2.CantidadMoneda=multMoneda2*this.Moneda1.CantidadMoneda;
+        this.Moneda2.CantidadMoneda=this.Moneda1.CantidadMoneda/multMoneda2;
 
     }
     output(){
@@ -40,7 +57,7 @@ class conversor{
 }
 class moneda{
     constructor(pNombreMoneda,pCantidadMoneda,pValorDolares=1){
-        this.NombreMoneda=pNombreMoneda.toLowerCase();
+        this.NombreMoneda=pNombreMoneda.toUpperCase();
         this.CantidadMoneda=pCantidadMoneda;
         this.ValorDolares=pValorDolares;
     }
@@ -54,8 +71,8 @@ if(localStorage.getItem('Dolares')!== null){
     dolaresArray=JSON.parse(localStorage.getItem('Dolares'));
 }
 function CalcConversion(){
-    let moneda1="usd";
-    let moneda2="usd";
+    let moneda1="EUR";
+    let moneda2="EUR";
     let cantMoneda1=0;
     let outputText="";
     moneda1=document.getElementById("curr1").value;
@@ -65,14 +82,15 @@ function CalcConversion(){
     mon1 = new moneda(moneda1,cantMoneda1);
     mon2 = new moneda(moneda2,0);
 
-    let conv = new conversor(mon1,mon2);
+    var conv = new conversor(mon1,mon2);
 
-    //guardo conversor en array para analizar estadisticas
-    convArray.push(conv);
+
 
     // calculo la cantidad de la segunda moneda
     // texto de salida y cantDolares
     outputText=conv.output();
+    //guardo conversor en array para analizar estadisticas
+    convArray.push(conv);
     const resultOutput = document.getElementById("result");
     resultOutput.innerHTML=(Math.round(conv.Moneda2.CantidadMoneda*1000)/1000)+" "+moneda2;
     dolaresArray.push(convArray[convArray.length-1].cantDolares);

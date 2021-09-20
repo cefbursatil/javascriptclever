@@ -19,38 +19,56 @@ class conversor{
     convert(){
         //Metodo que realiza la conversión de monedas
         let multMoneda2=0;
-        
+        console.log(this.Moneda1);
+        let NomMoneda1=this.Moneda1.NombreMoneda;
+        let NomMoneda2=this.Moneda2.NombreMoneda;
+        let CanMoneda1=this.Moneda1.CantidadMoneda;
+        let CantDolares=0;
+        let canMoneda2=0;
+        let self=this;
+        return this.request().then(function(){
+            if(ValorDolares[NomMoneda1] === undefined || ValorDolares[NomMoneda2] === undefined){
+                console.log("undefined "+ ValorDolares[NomMoneda1]);
+                multMoneda2=1;
+            }
+            else{
+                multMoneda2=ValorDolares[NomMoneda1]/ValorDolares[NomMoneda2];
+                
+            }
+            CantDolares=ValorDolares[NomMoneda1]*CanMoneda1;
+            canMoneda2=CanMoneda1/multMoneda2;
+            self.cantDolares=CantDolares;
+            self.Moneda2.CantidadMoneda=canMoneda2;
+            
+        });
+        console.log("YEAHAAFADSFA");    
+
+    }
+    request(){
         // API
+        
         const APIURL = 'http://api.exchangeratesapi.io/v1/latest' ; 
         //Declaramos la información a enviar
         const infoPost =  {access_key: 'c0e73835a8c74e4e8a2ff702754ea125', base: 'EUR'};
-
-        $.ajax({
+        
+        return $.ajax({
             method: "get",
             url: APIURL,
             data: infoPost,
             dataType:"json",
+            timeout: 100000000,
             success: function(respuesta){
                 ValorDolares=respuesta.rates;
                 console.log(ValorDolares);
                 
             }
-        })
-        if(ValorDolares[this.Moneda1.NombreMoneda] === undefined || ValorDolares[this.Moneda2.NombreMoneda] === undefined){
-            console.log("undefined");
-            multMoneda2=1;
-            this.cantDolares=multMoneda2*this.Moneda1.CantidadMoneda;
-        }
-        else{
-            multMoneda2=ValorDolares[this.Moneda1.NombreMoneda]/ValorDolares[this.Moneda2.NombreMoneda];
-            this.cantDolares=ValorDolares[this.Moneda1.NombreMoneda]*this.Moneda1.CantidadMoneda;
-        }
-        
-        this.Moneda2.CantidadMoneda=this.Moneda1.CantidadMoneda/multMoneda2;
+        });
 
     }
     output(){
+        
         this.convert();
+
         return(this.Moneda1.CantidadMoneda+this.Moneda1.NombreMoneda+" equivalen a "+this.Moneda2.CantidadMoneda+this.Moneda2.NombreMoneda);
     }
 
@@ -78,17 +96,21 @@ function CalcConversion(){
     moneda1=document.getElementById("curr1").value;
     cantMoneda1=document.getElementById("cantidad").value;
     moneda2=document.getElementById("curr2").value;
+    if(!$.isNumeric(cantMoneda1)){
+        alert("You should insert a numeric value in the ammount of currency field");
+        return false;
+    }
     //Creo los objetos
     mon1 = new moneda(moneda1,cantMoneda1);
     mon2 = new moneda(moneda2,0);
 
-    var conv = new conversor(mon1,mon2);
+    conv = new conversor(mon1,mon2);
 
 
 
     // calculo la cantidad de la segunda moneda
     // texto de salida y cantDolares
-    outputText=conv.output();
+    $.when(conv.convert()).done(function(){
     //guardo conversor en array para analizar estadisticas
     convArray.push(conv);
     const resultOutput = document.getElementById("result");
@@ -96,16 +118,18 @@ function CalcConversion(){
     dolaresArray.push(convArray[convArray.length-1].cantDolares);
     localStorage.setItem('Dolares',JSON.stringify(dolaresArray));
     localStorage.setItem('Conversiones',JSON.stringify(convArray));
-    $('#result').animate({height :'50px',
+    $('#result').animate({height :'20px',
                           margin:"2em",
-                          "font-size":"50px"},"slow")
+                          "font-size":"20px"},"slow")
                 .fadeIn(2000)
                 .css({"color":"blue"})
-                .delay(4000)
+                .delay(20000)
                 .animate({height :'20px',
-                          margin:"1.5em",
-                          "font-size":"25px"},"slow")
-                .fadeOut(5000);    
+                          margin:"2em",
+                          "font-size":"20px"},"slow")
+                .fadeOut(1000);    
+
+    });            
 }
 
 function showLastConversions(){
